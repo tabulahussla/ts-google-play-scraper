@@ -7,7 +7,7 @@ import debug from "util/debug";
 
 describe("Top Charts", () => {
 	it("should retreive top charts with valid params", async function() {
-		this.timeout(15000);
+		this.timeout(10000);
 
 		const result = await topCharts({
 			category: Category.FAMILY,
@@ -22,7 +22,7 @@ describe("Top Charts", () => {
 	});
 
 	it("should retreive top charts with valid params with age", async function() {
-		this.timeout(15000);
+		this.timeout(10000);
 
 		const result = await topCharts({
 			category: Category.FAMILY_MUSICVIDEO_9_AND_UP,
