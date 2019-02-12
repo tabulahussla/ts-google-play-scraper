@@ -14,4 +14,6 @@ declare module "google-play-scraping" {
 		num: number;
 	}
 	export type TopCharts = ListApplication[];
+
+	export function topCharts(options: TopChartsRequest): Promise<TopCharts>;
 }

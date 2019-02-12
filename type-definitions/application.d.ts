@@ -1,4 +1,6 @@
 declare module "google-play-scraping" {
+	export function application(options: ApplicationRequest): Promise<Application>;
+
 	export type Histogram = {
 		[key: number]: {
 			[key: number]: number;
