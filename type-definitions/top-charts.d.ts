@@ -5,11 +5,7 @@ declare module "google-play-scraping" {
 		languageCode?: string;
 		countryCode?: string;
 	}
-	export interface TopChartsInternalRequest extends CommonRequest {
-		category: string;
-		collection: string;
-		languageCode?: string;
-		countryCode?: string;
+	export interface TopChartsInternalRequest extends TopChartsRequest {
 		start: number;
 		num: number;
 	}
