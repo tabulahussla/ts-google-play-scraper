@@ -49,7 +49,7 @@
 		],
 		"array-bracket-spacing": ["error", "never"],
 		"object-curly-spacing": ["error", "always"],
-		"max-len": ["error", { "code": 100 }]
+		"max-len": ["error", { "code": 120 }]
 	},
 	"settings": {
 		"import/resolver": {
