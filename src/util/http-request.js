@@ -3,7 +3,11 @@ import userAgent from "userAgent";
 import throttle from "throat";
 
 export function httpRequestImpl(options) {
-	return Axios({ ...options, headers: { ...(options.headers || {}), "User-Agent": userAgent } });
+	return Axios({
+		responseType: "text",
+		...options,
+		headers: { ...(options.headers || {}), "User-Agent": userAgent },
+	});
 }
 
 let requestFunction = httpRequestImpl;

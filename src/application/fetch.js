@@ -18,7 +18,6 @@ export default async function fetchApplication({ storeId, languageCode, countryC
 		});
 	const response = await httpRequest({
 		url: requestUrl,
-		responseType: "text",
 		...(options || {}),
 	});
 

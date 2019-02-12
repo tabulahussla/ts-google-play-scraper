@@ -57,7 +57,6 @@ export default async function fetchTopCharts({
 	const response = await httpRequest({
 		url: requestUrl,
 		method: "POST",
-		responseType: "text",
 		...(options || {}),
 		headers: {
 			...(options.headers || {}),
