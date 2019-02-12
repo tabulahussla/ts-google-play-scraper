@@ -2,7 +2,6 @@ import qs from "querystring";
 import httpRequest from "util/http-request";
 
 export const BASE_URL = "https://play.google.com/store/apps";
-
 export const FAMILY_REGEXP = /^FAMILY_?/;
 export const AGE_REGEXP = /(_UNDER_5|_6_TO_8|_9_AND_UP)$/;
 export const AGE_MAP = {
@@ -11,13 +10,18 @@ export const AGE_MAP = {
 	_9_AND_UP: "AGE_RANGE3",
 };
 
-export function topChartsUrl({ category, collection, countryCode, languageCode }) {
+export function topChartsUrl({ category, collection, countryCode, languageCode, num = 20 }) {
 	const query = {
 		hl: languageCode,
 		gl: countryCode,
-		num: 20,
-		age: categoryAge(category),
+		num,
 	};
+	const age = categoryAge(category);
+	if (age) {
+		query.age = age;
+		category = category.replace(AGE_REGEXP, "");
+	}
+
 	let url = BASE_URL;
 
 	if (category) {
@@ -37,16 +41,31 @@ export function categoryAge(category) {
 
 /**
  * @export
- * @param {import("google-play-scraping").TopChartsRequest} options
+ * @param {import("google-play-scraping").TopChartsInternalRequest} options
  * @returns {Promise<string>}
  */
-export default async function fetchTopCharts({ category, collection, languageCode, countryCode, options }) {
-	const requestUrl = topChartsUrl({ category, collection, languageCode, countryCode });
+export default async function fetchTopCharts({
+	category,
+	collection,
+	languageCode,
+	countryCode,
+	options = {},
+	start = 0,
+	num,
+}) {
+	const requestUrl = topChartsUrl({ category, collection, languageCode, countryCode, num });
 	const response = await httpRequest({
 		url: requestUrl,
 		method: "POST",
 		responseType: "text",
 		...(options || {}),
+		headers: {
+			...(options.headers || {}),
+			"content-type": "application/x-www-form-urlencoded",
+		},
+		data: qs.stringify({
+			start,
+		}),
 	});
 
 	return response.data;
