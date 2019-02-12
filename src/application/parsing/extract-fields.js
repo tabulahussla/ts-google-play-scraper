@@ -125,10 +125,6 @@ export function extractor(scriptData, request) {
 	};
 }
 
-export function extractLanguageList(container) {
-	return container.map(val => val[0]).slice(1);
-}
-
 export function parseReleaseDate(text = "", { languageCode }) {
 	return parseDate(text, languageCode);
 }
