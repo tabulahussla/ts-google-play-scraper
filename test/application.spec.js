@@ -1,3 +1,4 @@
+
 import "mocha";
 import assert from "assert";
 import application from "application";
@@ -8,7 +9,7 @@ import debug from "util/debug";
 describe("Application", () => {
 	it("should retreive application with valid params", async () => {
 		const app = await application({
-			storeId: "com.astragon.cs2016",
+			storeId: "com.indigokids.mimfootball",
 			languageCode: "en-AU",
 			countryCode: "US",
 		});
@@ -50,7 +51,7 @@ describe("Application", () => {
 	});
 });
 
-function assertValidApplication(app) {
+export function assertValidApplication(app) {
 	assert.ok(app && typeof app === "object");
 	assert.ok(typeof app.storeId === "string");
 	assert.ok(typeof app.title === "string");
@@ -89,10 +90,7 @@ function assertValidApplication(app) {
 	assert.ok(typeof app.contentRating === "string");
 	assert.ok(!app.contentRatingDescription || typeof app.contentRatingDescription === "string");
 	assert.ok(typeof app.adSupported === "boolean");
-	assert.ok(
-		!app.released || (app.released instanceof Date && app.released.toString() !== "Invalid Date"),
-		"invalid release date",
-	);
+	assert.ok(app.released instanceof Date, "invalid release date");
 	assert.ok(app.updated instanceof Date);
 	assert.ok(typeof app.version === "string");
 	assert.ok(typeof app.changelog === "string");
