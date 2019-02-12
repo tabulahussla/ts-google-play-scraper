@@ -2,8 +2,6 @@ import fetchTopCharts from "./fetch";
 import parseApplicationList from "common/parsing/parse-list";
 import debug from "util/debug";
 
-export const TIME_BETWEEN_PAGES = 1000;
-
 /**
  * @export
  * @param {import("google-play-scraping").TopChartsRequest} options
