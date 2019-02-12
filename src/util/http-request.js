@@ -1,5 +1,15 @@
 import Axios from "axios";
 import userAgent from "userAgent";
+import throttle from "throat";
+
+export function httpRequestImpl(options) {
+	return Axios({ ...options, headers: { ...(options.headers || {}), "User-Agent": userAgent } });
+}
+
+let requestFunction = httpRequestImpl;
+if (process.env.NODE_ENV === "test") {
+	requestFunction = throttle(1, httpRequestImpl);
+}
 
 /**
  *
@@ -8,6 +18,4 @@ import userAgent from "userAgent";
  * @param {import("axios").AxiosRequestConfig} options
  * @returns
  */
-export default function httpRequest(options) {
-	return Axios({ ...options, headers: { ...(options.headers || {}), "User-Agent": userAgent } });
-}
+export default requestFunction;
