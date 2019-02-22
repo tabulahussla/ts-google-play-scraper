@@ -1,6 +1,6 @@
 {
 	"name": "@xxorg/google-play-scraping",
-	"version": "0.3.0",
+	"version": "0.3.3",
 	"description": "Google Play Scraping",
 	"main": "dist/",
 	"repository": "git@gitlab.com:openseen/asidc/google-play-scraping.git",
