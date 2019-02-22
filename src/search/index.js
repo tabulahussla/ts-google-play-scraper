@@ -1,4 +1,4 @@
-import fetchSearch, { getClp, getNextToken, fetchResults } from "./fetch";
+import initialRequest, { extractClp, extractPageToken, nextPageRequest } from "./fetch";
 import parseApplicationList from "common/parsing/parse-list";
 import debug from "util/debug";
 
@@ -9,23 +9,23 @@ import debug from "util/debug";
  */
 export default async function search(options) {
 	const output = [];
-	const initial = await fetchSearch(options);
+	const initial = await initialRequest(options);
 
 	output.push(...parseApplicationList(initial));
 
-	let clp = getClp(initial);
-	let nextToken = getNextToken(initial);
+	let clp = extractClp(initial);
+	let pageToken = extractPageToken(initial);
 
 	let num = 48;
 	let start = 0;
 
-	do {
+	while (pageToken) {
 		try {
-			const html = await fetchResults({ ...options, clp, nextToken, num, start });
+			const html = await nextPageRequest({ ...options, clp, pageToken, num, start });
 			start += num;
 
-			clp = clp || getClp(html);
-			nextToken = getNextToken(html);
+			clp = clp || extractClp(html);
+			pageToken = extractPageToken(html);
 
 			output.push(...parseApplicationList(html));
 		} catch (err) {
@@ -35,7 +35,7 @@ export default async function search(options) {
 			}
 			throw err;
 		}
-	} while (nextToken);
+	}
 
 	return output;
 }

@@ -2,3 +2,5 @@ src/
 test/
 config/
 bin/
+fixtures/html
+fixtures/har

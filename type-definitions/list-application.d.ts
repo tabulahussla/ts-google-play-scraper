@@ -4,7 +4,7 @@ declare module "google-play-scraping" {
 
 		icon: string;
 		title: string;
-		summary: string;
+		summary?: string;
 		score: number;
 		formattedScore: string;
 

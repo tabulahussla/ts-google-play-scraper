@@ -18,7 +18,7 @@ export async function skipClusterPage(response, options) {
 	return response.data;
 }
 
-export function getClp(html) {
+export function extractClp(html) {
 	// Try to find clp from "next page" html elem.
 	let [, match = void 0] = html.match(/\?clp=(.*?)">/) || [];
 	// ... if we don't have it, we're probably on innerPage;
@@ -31,7 +31,7 @@ export function getClp(html) {
 	if (!match) [, match = void 0] = html.match(/\?clp\\x3d(.*?)';/) || [];
 	return match && match.replace(/%3D/g, "=");
 }
-export function getNextToken(html) {
+export function extractPageToken(html) {
 	// extract the token for the next page request
 	const [s = void 0] = html.match(/\\x22-p6(.*?):S:(.*?)\\x22/g) || [];
 	return s && s.replace(/\\\\u003d/g, "=").replace(/\\x22/g, "");
@@ -39,10 +39,10 @@ export function getNextToken(html) {
 
 /**
  * @export
- * @param {import("google-play-scraping").SearchRequest&{nextToken:string,clp:string,num:number,start:number}} options
+ * @param {import("google-play-scraping").SearchRequest&{pageToken:string,clp:string,num:number,start:number}} options
  * @returns {Promise<string>}
  */
-export async function fetchResults({ nextToken, clp, languageCode, countryCode, num, start, options = {} }) {
+export async function nextPageRequest({ pageToken, clp, languageCode, countryCode, num, start, options = {} }) {
 	const response = await httpRequest({
 		url: CLUSTER_PAGE_URL,
 		method: "POST",
@@ -54,7 +54,7 @@ export async function fetchResults({ nextToken, clp, languageCode, countryCode, 
 		data: rawStringify({
 			num,
 			start,
-			pagTok: nextToken,
+			pagTok: pageToken,
 			clp,
 			pagtt: 3,
 			hl: languageCode,
@@ -70,7 +70,7 @@ export async function fetchResults({ nextToken, clp, languageCode, countryCode, 
  * @param {import("google-play-scraping").SearchRequest} options
  * @returns {Promise<string>}
  */
-export default async function fetchSearch({ term, languageCode, countryCode, pricing, options }) {
+export default async function initialRequest({ term, languageCode, countryCode, pricing, options }) {
 	const query = {
 		c: "apps",
 		q: term,

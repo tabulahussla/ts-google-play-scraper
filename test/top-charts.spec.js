@@ -51,9 +51,8 @@ describe("Top Charts", () => {
 export function assertValidListApplication(app) {
 	assert.ok(app && typeof app === "object");
 	assert.ok(typeof app.storeId === "string");
-	assert.ok(typeof app.icon === "string");
+	assert.ok(typeof app.icon === "string", "invalid icon");
 	assert.ok(typeof app.title === "string");
-	assert.ok(typeof app.summary === "string");
 	assert.ok(typeof app.score === "number");
 	assert.ok(typeof app.formattedScore === "string");
 	assert.ok(typeof app.numericPrice === "number");

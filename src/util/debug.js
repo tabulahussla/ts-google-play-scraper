@@ -1,5 +1,6 @@
-import debug from "debug";
+import Debug from "debug";
 
 export const DEBUG_SYMBOL = "GOOGLE_PLAY_SCRAPING";
 
-export default debug(DEBUG_SYMBOL);
+const debug = Debug(DEBUG_SYMBOL);
+export default debug;

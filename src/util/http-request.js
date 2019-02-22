@@ -10,16 +10,12 @@ export function httpRequestImpl(options) {
 	});
 }
 
-let requestFunction = httpRequestImpl;
+/**
+ * @type {(req:import("axios").AxiosRequestConfig)=>Promise<import("axios").AxiosResponse>}
+ */
+let httpRequest = httpRequestImpl;
 if (process.env.NODE_ENV === "test") {
-	requestFunction = throttle(1, httpRequestImpl);
+	httpRequest = throttle(1, httpRequestImpl);
 }
 
-/**
- *
- *
- * @export
- * @param {import("axios").AxiosRequestConfig} options
- * @returns
- */
-export default requestFunction;
+export default httpRequest;
