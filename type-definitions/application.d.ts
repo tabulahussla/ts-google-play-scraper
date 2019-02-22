@@ -1,4 +1,4 @@
-declare module "google-play-scraping" {
+declare module "@xxorg/google-play-scraping" {
 	export function application(options: ApplicationRequest): Promise<Application>;
 
 	export type Histogram = {

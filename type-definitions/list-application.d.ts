@@ -1,4 +1,4 @@
-declare module "google-play-scraping" {
+declare module "@xxorg/google-play-scraping" {
 	export interface ListApplication {
 		storeId: string;
 

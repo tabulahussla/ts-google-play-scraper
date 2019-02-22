@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 
-declare module "google-play-scraping" {
+declare module "@xxorg/google-play-scraping" {
 	export interface CommonRequest {
 		options?: AxiosRequestConfig;
 	}

@@ -1,4 +1,4 @@
-declare module "google-play-scraping" {
+declare module "@xxorg/google-play-scraping" {
 	export enum Category {
 		"APPLICATION" = "APPLICATION",
 		"ANDROID_WEAR" = "ANDROID_WEAR",

@@ -1,4 +1,4 @@
-declare module "google-play-scraping" {
+declare module "@xxorg/google-play-scraping" {
 	export enum Collection {
 		"TOP_FREE" = "topselling_free",
 		"TOP_PAID" = "topselling_paid",

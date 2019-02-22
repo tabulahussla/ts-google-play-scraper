@@ -1,4 +1,4 @@
-declare module "google-play-scraping" {
+declare module "@xxorg/google-play-scraping" {
 	export function search(options: SearchRequest): Promise<Search>;
 
 	export enum Pricing {

@@ -1,4 +1,4 @@
-declare module "google-play-scraping" {
+declare module "@xxorg/google-play-scraping" {
 	export function publisher(options: PublisherRequest): Promise<Publisher>;
 
 	export interface PublisherRequest extends CommonRequest {
