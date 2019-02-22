@@ -1,8 +1,9 @@
 {
 	"name": "@xxorg/google-play-scraping",
-	"version": "0.3.4",
+	"version": "0.3.7",
 	"description": "Google Play Scraping",
 	"main": "dist/",
+	"types": "index.d.ts",
 	"repository": "git@gitlab.com:openseen/asidc/google-play-scraping.git",
 	"author": "Georgy Chirkov <mail@api.haus>",
 	"license": "UNLICENSED",
