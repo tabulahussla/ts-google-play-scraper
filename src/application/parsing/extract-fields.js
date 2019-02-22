@@ -111,7 +111,7 @@ export function extractMappedApplication(scriptData, request) {
 /**
  * @export
  * @param {Object} scriptData
- * @param {import("google-play-scraping").ApplicationRequest} request
+ * @param {import("@xxorg/google-play-scraping").ApplicationRequest} request
  * @returns {(spec:Array|{path:Array,fun:Function}) => void}
  */
 export function extractor(scriptData, request) {
@@ -132,6 +132,7 @@ export function parseReleaseDate(text = "", { languageCode }) {
 export function descriptionText(description = "") {
 	// preserve the line breaks when converting to text
 	const html = cheerio.load("<div>" + description.replace(/<br>/g, "\r\n") + "</div>");
+	// @ts-ignore
 	return cheerio.text(html("div"));
 }
 

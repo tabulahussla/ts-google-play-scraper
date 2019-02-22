@@ -41,7 +41,7 @@ export function categoryAge(category) {
 
 /**
  * @export
- * @param {import("google-play-scraping").TopChartsInternalRequest} options
+ * @param {import("@xxorg/google-play-scraping").TopChartsInternalRequest} options
  * @returns {Promise<string>}
  */
 export default async function fetchTopCharts({

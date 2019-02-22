@@ -39,7 +39,7 @@ export function extractPageToken(html) {
 
 /**
  * @export
- * @param {import("google-play-scraping").SearchRequest&{pageToken:string,clp:string,num:number,start:number}} options
+ * @param {import("@xxorg/google-play-scraping").SearchRequest&{pageToken:string,clp:string,num:number,start:number}} options
  * @returns {Promise<string>}
  */
 export async function nextPageRequest({ pageToken, clp, languageCode, countryCode, num, start, options = {} }) {
@@ -67,7 +67,7 @@ export async function nextPageRequest({ pageToken, clp, languageCode, countryCod
 
 /**
  * @export
- * @param {import("google-play-scraping").SearchRequest} options
+ * @param {import("@xxorg/google-play-scraping").SearchRequest} options
  * @returns {Promise<string>}
  */
 export default async function initialRequest({ term, languageCode, countryCode, pricing, options }) {

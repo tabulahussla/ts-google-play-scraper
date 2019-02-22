@@ -3,7 +3,7 @@ import cheerio from "cheerio";
 /**
  * @export
  * @param {string} html
- * @returns {import("google-play-scraping").Publisher}
+ * @returns {import("@xxorg/google-play-scraping").Publisher}
  */
 export default function parsePublisher(html) {
 	const $ = cheerio.load(html);

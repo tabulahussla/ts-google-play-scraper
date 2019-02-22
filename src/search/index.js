@@ -4,8 +4,8 @@ import debug from "util/debug";
 
 /**
  * @export
- * @param {import("google-play-scraping").SearchRequest} options
- * @returns {Promise<import("google-play-scraping").Search>}
+ * @param {import("@xxorg/google-play-scraping").SearchRequest} options
+ * @returns {Promise<import("@xxorg/google-play-scraping").Search>}
  */
 export default async function search(options) {
 	const output = [];

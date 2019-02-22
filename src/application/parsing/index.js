@@ -4,7 +4,7 @@ import { extractScriptData } from "./script-data";
 /**
  * @export
  * @param {string} html
- * @param {import("google-play-scraping").ApplicationRequest} request
+ * @param {import("@xxorg/google-play-scraping").ApplicationRequest} request
  */
 export default function parseApplication(html, request) {
 	const scriptData = extractScriptData(html);

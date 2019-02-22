@@ -14,7 +14,7 @@ export function extractPageToken(html) {
 
 /**
  * @export
- * @param {import("google-play-scraping").PublisherRequest} options
+ * @param {import("@xxorg/google-play-scraping").PublisherRequest} options
  * @returns {string}
  */
 export function publisherUrl({ storeId, languageCode, countryCode }) {
@@ -32,7 +32,7 @@ export function publisherUrl({ storeId, languageCode, countryCode }) {
 
 /**
  * @export
- * @param {import("google-play-scraping").PublisherRequest&{pageToken:string,num:number,start:number}} options
+ * @param {import("@xxorg/google-play-scraping").PublisherRequest&{pageToken:string,num:number,start:number}} options
  * @returns {Promise<string>}
  */
 export async function nextPageRequest({
@@ -69,7 +69,7 @@ export async function nextPageRequest({
 
 /**
  * @export
- * @param {import("google-play-scraping").PublisherRequest} options
+ * @param {import("@xxorg/google-play-scraping").PublisherRequest} options
  * @returns {Promise<string>}
  */
 export async function initialRequest({ storeId, languageCode, countryCode, options }) {

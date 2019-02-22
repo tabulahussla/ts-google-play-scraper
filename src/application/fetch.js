@@ -5,7 +5,7 @@ export const BASE_URL = "https://play.google.com/store/apps/details?";
 
 /**
  * @export
- * @param {import("google-play-scraping").ApplicationRequest} options
+ * @param {import("@xxorg/google-play-scraping").ApplicationRequest} options
  * @returns {Promise<string>}
  */
 export default async function fetchApplication({ storeId, languageCode, countryCode, options }) {

@@ -8,14 +8,14 @@ export const NUMERIC_ID_REGEXP = /^\d+$/;
 
 /**
  * @export
- * @param {import("google-play-scraping").PublisherRequest} options
- * @returns {Promise<import("google-play-scraping").Publisher>}
+ * @param {import("@xxorg/google-play-scraping").PublisherRequest} options
+ * @returns {Promise<import("@xxorg/google-play-scraping").Publisher>}
  */
 export default async function publisher(options) {
 	debug("PUBLISHER %o", options);
 
 	let { storeId } = options;
-	/** @type {import("google-play-scraping").Publisher} */
+	/** @type {import("@xxorg/google-play-scraping").Publisher} */
 	// @ts-ignore
 	let publisherInfo = {
 		name: storeId,

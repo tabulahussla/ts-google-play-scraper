@@ -5,7 +5,7 @@ export const BASE_URL = "https://play.google.com/store/apps/dev";
 
 /**
  * @export
- * @param {import("google-play-scraping").PublisherRequest} options
+ * @param {import("@xxorg/google-play-scraping").PublisherRequest} options
  * @returns {Promise<string>}
  */
 export async function fetchPublisherInfo({ storeId, languageCode, countryCode, options }) {

@@ -4,8 +4,8 @@ import debug from "util/debug";
 
 /**
  * @export
- * @param {import("google-play-scraping").TopChartsRequest} options
- * @returns {Promise<import("google-play-scraping").TopCharts>}
+ * @param {import("@xxorg/google-play-scraping").TopChartsRequest} options
+ * @returns {Promise<import("@xxorg/google-play-scraping").TopCharts>}
  */
 export default async function topCharts(options) {
 	debug("TOP CHARTS %o", options);

@@ -8,7 +8,7 @@ export const CURRENCY_REGEXP = /((?:(?!\.))[\D]+)/;
 /**
  * @export
  * @param {string} html
- * @returns {import("google-play-scraping").ListApplication[]}
+ * @returns {import("@xxorg/google-play-scraping").ListApplication[]}
  */
 export default function parseObfuscatedApplicationList(html) {
 	const $ = cheerio.load(html);
@@ -21,7 +21,7 @@ export default function parseObfuscatedApplicationList(html) {
 /**
  * @export
  * @param {Cheerio} $app
- * @returns {import("google-play-scraping").ListApplication}
+ * @returns {import("@xxorg/google-play-scraping").ListApplication}
  */
 export function parseObfuscatedApp($app) {
 	let formattedPrice = $app
