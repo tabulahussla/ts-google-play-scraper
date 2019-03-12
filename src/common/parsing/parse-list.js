@@ -3,6 +3,7 @@ import cheerio from "cheerio";
 export const NUMERIC_REGEXP = /\d/;
 export const NUMERIC_PRICE_REGEXP = /([\d]+[.,]?[\d]+)/;
 export const CURRENCY_REGEXP = /((?:(?!\.))[\D]+)/;
+export const COMMA_REGEXP = /,/g;
 
 /**
  * @export
@@ -38,7 +39,7 @@ export function parseApp($app) {
 	if (!isFree) {
 		// @ts-ignore
 		const [, label = "0"] = formattedPrice.match(NUMERIC_PRICE_REGEXP) || [];
-		numericPrice = +label;
+		numericPrice = parseFloat(label.trim().replace(COMMA_REGEXP, "."));
 		[, currency = ""] = formattedPrice.match(CURRENCY_REGEXP) || [];
 		currency = currency.trim();
 	}
