@@ -1,5 +1,6 @@
 import cheerio from "cheerio";
 
+export const NUMERIC_REGEXP = /\d/;
 export const NUMERIC_PRICE_REGEXP = /([\d]+[.,]?[\d]+)/;
 export const CURRENCY_REGEXP = /((?:(?!\.))[\D]+)/;
 
@@ -25,10 +26,11 @@ export function parseApp($app) {
 	let formattedPrice = $app
 		.find("span.display-price")
 		.first()
-		.text();
+		.text()
+		.trim();
 
 	// if price string contains numbers, it's not free
-	const isFree = !/\d/.test(formattedPrice);
+	const isFree = !NUMERIC_REGEXP.test(formattedPrice);
 
 	let numericPrice = 0;
 	let currency = "";
