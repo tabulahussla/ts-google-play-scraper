@@ -4,8 +4,8 @@ import { publisher } from "../src";
 import debug from "util/debug";
 import { assertValidListApplication } from "./top-charts.spec";
 
-describe("Publisher", () => {
-	it.only("should retreive publisher with valid params", async function() {
+describe.skip("Publisher", () => {
+	it("should retreive publisher with valid params", async function() {
 		this.timeout(10000);
 
 		const result = await publisher({
