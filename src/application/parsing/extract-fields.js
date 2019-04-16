@@ -60,6 +60,7 @@ export const MAPPINGS = {
 		path: ["ds:5", 0, 12, 5, 5, 4, 2],
 		fun: devUrl => devUrl.split("id=")[1],
 	},
+	developerInternalId: ["ds:5", 0, 12, 5, 0, 0],
 	developerEmail: ["ds:5", 0, 12, 5, 2, 0],
 	developerWebsite: ["ds:5", 0, 12, 5, 3, 5, 2],
 	developerAddress: ["ds:5", 0, 12, 5, 4, 0],

@@ -1,9 +1,7 @@
-
 import "mocha";
 import assert from "assert";
 import application from "application";
 import languageCodes from "fixtures/language-codes.json";
-import moment from "moment";
 import debug from "util/debug";
 
 describe("Application", () => {
@@ -21,8 +19,6 @@ describe("Application", () => {
 	it.skip("should retreive application with valid params on every language code", async function() {
 		this.timeout(languageCodes.length * 5000);
 
-		const validReleaseTimestamp = +moment.utc("Mar 22, 2017", "LL").toDate();
-
 		for (const languageCode of languageCodes) {
 			try {
 				const app = await application({
@@ -32,8 +28,6 @@ describe("Application", () => {
 				});
 
 				assertValidApplication(app);
-
-				assert.strictEqual(+app.released, validReleaseTimestamp);
 			} catch (err) {
 				debug("Locale %s invalid", languageCode, err);
 			}
@@ -74,6 +68,7 @@ export function assertValidApplication(app) {
 	assert.ok(typeof app.requiredOSVersion === "string");
 	assert.ok(typeof app.developerName === "string");
 	assert.ok(typeof app.developerId === "string");
+	assert.ok(typeof app.developerInternalId === "string");
 	assert.ok(typeof app.developerEmail === "string");
 	assert.ok(typeof app.developerWebsite === "string");
 	assert.ok(typeof app.developerAddress === "string");
