@@ -24,7 +24,7 @@ export function topChartsUrl({ category, collection, countryCode, languageCode, 
 
 	let url = BASE_URL;
 
-	if (category) {
+	if (category && category !== "OVERALL") {
 		url += `/category/${category}`;
 	}
 	url += `/collection/${collection}`;

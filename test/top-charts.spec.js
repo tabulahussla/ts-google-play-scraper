@@ -21,6 +21,21 @@ describe("Top Charts", () => {
 		result.forEach(assertValidListApplication);
 	});
 
+	it("should retreive top charts from OVERALL category", async function() {
+		this.timeout(10000);
+
+		const result = await topCharts({
+			category: Category.OVERALL,
+			collection: Collection.TOP_FREE,
+			languageCode: "ru",
+			countryCode: "RU",
+		});
+
+		debug("fetch %d applications", result.length);
+
+		result.forEach(assertValidListApplication);
+	});
+
 	it("should retreive top charts with valid params with age", async function() {
 		this.timeout(10000);
 

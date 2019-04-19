@@ -5,7 +5,7 @@ import { readFile } from "fs-extra";
 import { extractScriptData } from "application/parsing/script-data";
 
 describe("Application", () => {
-	describe("Parsing", () => {
+	context("Parsing", () => {
 		it("should be able to extract script data", async () => {
 			const filePath = path.resolve(
 				"fixtures/html/storefront-11.02.2019/application/com.facebook.katana.html",
