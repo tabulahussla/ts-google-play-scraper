@@ -2,7 +2,7 @@ import "mocha";
 import path from "path";
 import assert from "assert";
 import { readFile } from "fs-extra";
-import { extractScriptData } from "application/parsing/script-data";
+import { parse } from "util/script-data";
 
 describe("Application", () => {
 	context("Parsing", () => {
@@ -11,7 +11,7 @@ describe("Application", () => {
 				"fixtures/html/storefront-11.02.2019/application/com.facebook.katana.html",
 			);
 			const html = await readFile(filePath, "utf8");
-			const scriptData = extractScriptData(html);
+			const scriptData = parse(html);
 
 			assert.ok(scriptData);
 		});

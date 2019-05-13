@@ -1,5 +1,5 @@
-import initialRequest, { extractClp, extractPageToken, nextPageRequest } from "./fetch";
-import parseApplicationList from "common/parsing/parse-list";
+import initialRequest, { extractToken, nextPageRequest } from "./fetch";
+import { extract } from "common/parsing/parse-list";
 import debug from "util/debug";
 
 /**
@@ -11,26 +11,20 @@ export default async function search(options) {
 	const output = [];
 	const initial = await initialRequest(options);
 
-	output.push(...parseApplicationList(initial));
+	output.push(...extract(INITIAL_MAPPINGS.apps, initial));
 	debug("initial request parseApplicationList %d applications", output.length);
 
-	let clp = extractClp(initial);
-	let pageToken = extractPageToken(initial);
+	let token = extractToken(INITIAL_MAPPINGS.token, initial);
 
-	debug("clp %s, pageTok %s", clp, pageToken);
+	debug("token %s", token);
 
-	let num = 48;
-	let start = 0;
-
-	while (pageToken) {
+	while (token) {
 		try {
-			const html = await nextPageRequest({ ...options, clp, pageToken, num, start });
-			start += num;
+			const data = await nextPageRequest({ ...options, token });
 
-			clp = clp || extractClp(html);
-			pageToken = extractPageToken(html);
+			output.push(...extract(REQUEST_MAPPINGS.apps, data));
 
-			output.push(...parseApplicationList(html));
+			token = extractToken(REQUEST_MAPPINGS.token, data);
 		} catch (err) {
 			if (output.length) {
 				debug(err);
@@ -42,3 +36,13 @@ export default async function search(options) {
 
 	return output;
 }
+
+export const INITIAL_MAPPINGS = {
+	apps: ["ds:3", 0, 1, 0, 0, 0],
+	token: ["ds:3", 0, 1, 0, 0, 7, 1],
+};
+
+export const REQUEST_MAPPINGS = {
+	apps: [0, 0, 0],
+	token: [0, 0, 7, 1],
+};

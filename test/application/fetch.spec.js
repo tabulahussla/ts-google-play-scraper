@@ -5,7 +5,9 @@ import fetchApplication from "application/fetch";
 const APPLICATION_PAGE_REGEXP = /<title id="main-title">.*? - Apps on Google Play<\/title>/;
 
 describe("Application", () => {
-	it("should fetch application page with correct params", async () => {
+	it("should fetch application page with correct params", async function() {
+		this.timeout(10000);
+
 		const html = await fetchApplication({
 			storeId: "com.facebook.katana",
 			languageCode: "en-US",

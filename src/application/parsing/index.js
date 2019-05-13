@@ -1,5 +1,5 @@
 import { extractMappedApplication } from "./extract-fields";
-import { extractScriptData } from "./script-data";
+import { parse } from "../../util/script-data";
 
 /**
  * @export
@@ -7,7 +7,7 @@ import { extractScriptData } from "./script-data";
  * @param {import("@xxorg/google-play-scraping").ApplicationRequest} request
  */
 export default function parseApplication(html, request) {
-	const scriptData = extractScriptData(html);
+	const scriptData = parse(html);
 	const applicationData = extractMappedApplication(scriptData, request);
 
 	return applicationData;

@@ -1,5 +1,5 @@
 import fetchTopCharts from "./fetch";
-import parseApplicationList from "common/parsing/parse-list";
+import { parseApplicationList } from "common/parsing/parse-list";
 import debug from "util/debug";
 
 /**
