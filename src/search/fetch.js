@@ -1,6 +1,7 @@
 import qs from "querystring";
 import httpRequest from "util/http-request";
 import rawStringify from "util/stringify-raw";
+import debug from "util/debug";
 
 export const BASE_URL = "https://play.google.com/store/search";
 export const CLUSTER_PAGE_URL = "https://play.google.com/store/apps/collection/search_results_cluster_apps";
@@ -14,6 +15,7 @@ export async function skipClusterPage(response, options) {
 			url: innerUrl,
 			...(options || {}),
 		});
+		debug("skipClusterPage %s", innerUrl);
 	}
 	return response.data;
 }
@@ -43,6 +45,7 @@ export function extractPageToken(html) {
  * @returns {Promise<string>}
  */
 export async function nextPageRequest({ pageToken, clp, languageCode, countryCode, num, start, options = {} }) {
+	debug("nextPageRequest");
 	const response = await httpRequest({
 		url: CLUSTER_PAGE_URL,
 		method: "POST",
@@ -81,10 +84,12 @@ export default async function initialRequest({ term, languageCode, countryCode, 
 		query.price = pricing;
 	}
 	const requestUrl = `${BASE_URL}?${qs.stringify(query)}`;
+	debug("initial request");
 	const response = await httpRequest({
 		url: requestUrl,
 		...(options || {}),
 	});
+	debug("skip cluster page");
 	const html = await skipClusterPage(response, options);
 
 	return html;

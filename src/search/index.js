@@ -12,9 +12,12 @@ export default async function search(options) {
 	const initial = await initialRequest(options);
 
 	output.push(...parseApplicationList(initial));
+	debug("initial request parseApplicationList %d applications", output.length);
 
 	let clp = extractClp(initial);
 	let pageToken = extractPageToken(initial);
+
+	debug("clp %s, pageTok %s", clp, pageToken);
 
 	let num = 48;
 	let start = 0;
