@@ -9,7 +9,7 @@ test:
   extends: .setup
   stage: test
   script:
-    - yarn lint || true
+    - yarn lint
     - yarn test
 
 pages:
