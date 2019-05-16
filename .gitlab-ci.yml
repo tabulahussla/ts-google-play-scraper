@@ -30,6 +30,7 @@ release:
   stage: deploy
   script:
     - sh ci/git-auth.sh
+    - git ls-remote
     - sh ci/git-config.sh
     - npm_config_unsafe_perm=true yarn semantic-release
   only:

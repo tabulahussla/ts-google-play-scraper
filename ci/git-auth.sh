@@ -13,5 +13,3 @@ GIT_ASKPASS_PASSWORD=$(echo "$GIT_PASSWORD" | base64 -d)
 export GIT_ASKPASS_USER
 export GIT_ASKPASS_PASSWORD
 export GIT_ASKPASS="git-askpass-env"
-
-git ls-remote
