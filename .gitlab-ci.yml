@@ -1,0 +1,36 @@
+image: node:lts-alpine
+
+.setup:
+  before_script:
+    - sh ci/npm-auth.sh
+    - yarn
+
+test:
+  extends: .setup
+  stage: test
+  script:
+    - yarn lint || true
+    - yarn test
+
+pages:
+  extends: .setup
+  stage: deploy
+  script:
+    - yarn typedoc
+    - yarn cov
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+
+release:
+  image: timbru31/node-alpine-git:latest
+  extends: .setup
+  stage: deploy
+  script:
+    - sh ci/git-auth.sh
+    - sh ci/git-config.sh
+    - npm_config_unsafe_perm=true yarn semantic-release
+  only:
+    - master

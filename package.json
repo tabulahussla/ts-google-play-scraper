@@ -1,25 +1,31 @@
 {
 	"name": "@xxorg/google-play-scraping",
 	"version": "0.5.0",
-	"description": "Google Play Scraping",
-	"main": "dist/",
-	"types": "index.d.ts",
-	"repository": "git@gitlab.com:openseen/asidc/google-play-scraping.git",
+	"description": "Google Play scraping",
+	"main": "./dist/",
+	"types": "./dist/index.d.ts",
+	"repository": "https://gitlab.com/inner_dev/asidc/google-play-scraping.git",
 	"author": "Georgy Chirkov <mail@api.haus>",
 	"license": "UNLICENSED",
 	"private": false,
+	"publishConfig": {
+		"registry": "https://npm.api.haus/",
+		"tag": "latest"
+	},
 	"engines": {
-		"node": ">= 10"
+		"node": ">= 8.2.0"
 	},
 	"scripts": {
-		"lint": "eslint --fix src/. test/. --config .eslintrc.json",
-		"test": "DEBUG=GOOGLE_PLAY_SCRAPING NODE_ENV=test mocha --bail --exit --recursive -r @babel/register -r @babel/polyfill",
-		"cov": "nyc mocha --bail --exit --recursive -r @babel/register -r @babel/polyfill",
-		"tdd": "yarn run test -w --watch-extensions js,json --reporter min",
-		"dev": "nodemon bin/nodemon --exec babel-node",
-		"pm2": "pm2 start process.yml --env production",
-		"bundle": "rm -rf dist/; babel src/ -d dist/",
-		"prepublish": "yarn bundle"
+		"dev": "nodemon src/index.ts",
+		"lint": "tslint --project $(pwd)",
+		"test": "BABEL_DISABLE_CACHE=1 NODE_ENV=test BABEL_ENV=development mocha",
+		"cov": "NODE_ENV=test nyc mocha",
+		"type-check": "tsc --noEmit",
+		"type-check:watch": "yarn type-check --watch",
+		"build": "yarn build:types && yarn build:js",
+		"build:types": "node dts-gen",
+		"build:js": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline",
+		"prepublishOnly": "yarn build"
 	},
 	"dependencies": {
 		"axios": "^0.18.0",
@@ -44,29 +50,71 @@
 		"throat": "^4.1.0"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.0.0-beta.55",
-		"@babel/core": "^7.0.0-rc.2",
-		"@babel/node": "^7.0.0-beta.55",
-		"@babel/preset-env": "^7.3.1",
-		"@babel/register": "^7.0.0-beta.55",
-		"@types/cheerio": "^0.22.10",
+		"@babel/cli": "7.4.3",
+		"@babel/core": "7.4.3",
+		"@babel/node": "^7.2.2",
+		"@babel/plugin-proposal-class-properties": "7.4.0",
+		"@babel/plugin-proposal-object-rest-spread": "7.4.3",
+		"@babel/preset-env": "7.4.3",
+		"@babel/preset-typescript": "7.3.3",
+		"@babel/register": "^7.4.0",
+		"@commitlint/cli": "^7.5.2",
+		"@commitlint/config-conventional": "^7.5.0",
+		"@semantic-release/git": "^7.0.8",
+		"@semantic-release/npm": "^5.1.4",
+		"@types/cheerio": "^0.22.11",
 		"@types/config": "^0.0.34",
-		"@types/debug": "^4.1.0",
 		"@types/fs-extra": "^5.0.4",
+		"@types/mkdirp": "^0.5.2",
 		"@types/mocha": "^5.2.5",
-		"@types/node": "^10.12.21",
-		"@types/pino": "^5.8.4",
-		"@types/ramda": "^0.25.48",
+		"@types/node": "^11.13.0",
+		"@types/pino": "^5.8.6",
+		"@types/ramda": "^0.26.8",
+		"@xxorg/dts-generator": "^3.0.2",
 		"babel-plugin-add-module-exports": "^1.0.0",
-		"babel-plugin-module-resolver": "^3.1.3",
-		"eslint": "^5.13.0",
-		"eslint-import-resolver-babel-module": "^5.0.1",
-		"eslint-plugin-babel": "^5.1.0",
-		"eslint-plugin-import": "^2.16.0",
-		"eslint-plugin-node": "^8.0.1",
+		"babel-plugin-istanbul": "^5.1.1",
+		"babel-plugin-module-resolver": "^3.2.0",
+		"husky": "^2.1.0",
 		"mocha": "^5.2.0",
 		"nodemon": "^1.18.3",
-		"nyc": "^13.2.0",
-		"pino-pretty": "^2.5.0"
+		"nyc": "^12.0.2",
+		"pino-pretty": "^2.6.0",
+		"semantic-release": "^15.13.3",
+		"tsconfig": "^7.0.0",
+		"tslint": "^5.14.0",
+		"tslint-config-prettier": "^1.18.0",
+		"tslint-eslint-rules": "^5.4.0",
+		"typedoc": "^0.14.2",
+		"typescript": "3.3.3"
+	},
+	"nyc": {
+		"extension": [
+			".ts"
+		],
+		"require": [
+			"./babel-register.js",
+			"@babel/polyfill"
+		],
+		"exclude": [
+			"**/*.d.ts",
+			"dist/**/*",
+			"test/**/*",
+			"coverage/**/*"
+		],
+		"reporter": [
+			"html"
+		],
+		"sourceMap": false,
+		"instrument": false,
+		"all": true,
+		"report-dir": "./public/cov"
+	},
+	"files": [
+		"/dist"
+	],
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
 	}
 }
