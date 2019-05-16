@@ -70,7 +70,7 @@ export function extractCurrency(price: string) {
 /**
  * Apply MAPPINGS for each application in list from root path
  */
-export function extract(root: any, data: any) {
+export function extract(root: any, data: any): any {
 	const input: any = R.path(root, data);
 	return R.map(extractor(MAPPINGS), input);
 }

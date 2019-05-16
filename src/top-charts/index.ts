@@ -1,20 +1,17 @@
 import { parseApplicationList } from "~/common/parsing/parse-list";
+import { ListApplication } from "~/typedef/list-application";
+import { TopChartsRequest } from "~/typedef/top-charts";
 import debug from "~/util/debug";
 import fetchTopCharts from "./fetch";
 
-/**
- * @export
- * @param {import("@xxorg/google-play-scraping").TopChartsRequest} options
- * @returns {Promise<import("@xxorg/google-play-scraping").TopCharts>}
- */
-export default async function topCharts(options) {
+export default async function topCharts(options: TopChartsRequest) {
 	debug("TOP CHARTS %o", options);
 
 	const num = 120;
-	const output = [];
+	const output: ListApplication[] = [];
 
 	let start = 0;
-	let extractedApplications = [];
+	let extractedApplications: ListApplication[] = [];
 	do {
 		try {
 			const html = await fetchTopCharts({ ...options, start, num });

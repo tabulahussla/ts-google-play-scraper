@@ -1,4 +1,5 @@
 import { extract } from "~/common/parsing/parse-list";
+import { ListApplication } from "~/typedef/list-application";
 import debug from "~/util/debug";
 import initialRequest, { extractToken, nextPageRequest } from "./fetch";
 
@@ -8,7 +9,7 @@ import initialRequest, { extractToken, nextPageRequest } from "./fetch";
  * @returns {Promise<import("@xxorg/google-play-scraping").Search>}
  */
 export default async function search(options: any) {
-	const output = [];
+	const output: ListApplication[] = [];
 	const initial = await initialRequest(options);
 
 	output.push(...extract(INITIAL_MAPPINGS.apps, initial));

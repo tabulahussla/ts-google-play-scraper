@@ -1,17 +1,15 @@
 import cheerio from "cheerio";
 import { STORE_ID_REGEXP } from "~/application/parsing/extract-fields";
+import { ListApplication } from "~/typedef/list-application";
 
 export const APPLICATION_SELECTOR =
-	'c-wiz > div[jslog*="track:click,impression"]';
+	"c-wiz > div[jslog*=\"track:click,impression\"]";
 export const NUMERIC_PRICE_REGEXP = /([\d]+[.,]?[\d]+)/;
 export const CURRENCY_REGEXP = /((?:(?!\.))[\D]+)/;
 
-/**
- * @export
- * @param {string} html
- * @returns {import("@xxorg/google-play-scraping").ListApplication[]}
- */
-export default function parseObfuscatedApplicationList(html) {
+export default function parseObfuscatedApplicationList(
+	html
+): ListApplication[] {
 	const $ = cheerio.load(html);
 
 	return $(APPLICATION_SELECTOR)
@@ -19,13 +17,8 @@ export default function parseObfuscatedApplicationList(html) {
 		.map(app => parseObfuscatedApp($(app)));
 }
 
-/**
- * @export
- * @param {Cheerio} $app
- * @returns {import("@xxorg/google-play-scraping").ListApplication}
- */
-export function parseObfuscatedApp($app) {
-	let formattedPrice = $app
+export function parseObfuscatedApp($app): ListApplication {
+	const formattedPrice = $app
 		.find("button > div > span > span")
 		.first()
 		.text();
@@ -46,13 +39,13 @@ export function parseObfuscatedApp($app) {
 	}
 
 	const formattedScore =
-		$app.find('div[aria-label*="star"]').attr("aria-label") || "";
+		$app.find("div[aria-label*=\"star\"]").attr("aria-label") || "";
 	let score = NaN;
 	if (formattedScore) {
 		score = parseFloat(formattedScore.match(/[\d.]+/)[0]);
 	}
 	const storeUrl = $app
-		.find('a[href*="/store/apps/details?id="]')
+		.find("a[href*=\"/store/apps/details?id=\"]")
 		.first()
 		.attr("href");
 	const [, storeId = void 0] = storeUrl.match(STORE_ID_REGEXP) || [];
@@ -60,22 +53,22 @@ export function parseObfuscatedApp($app) {
 	return {
 		storeId,
 		title: $app
-			.find('a[href*="/store/apps/details?id="] > div')
+			.find("a[href*=\"/store/apps/details?id=\"] > div")
 			.first()
 			.text(),
 		developerName: $app
-			.find('a[href*="store/apps/dev"] > div')
+			.find("a[href*=\"store/apps/dev\"] > div")
 			.first()
 			.text(),
 		developerId:
 			$app
-				.find('a[href*="store/apps/dev"]')
+				.find("a[href*=\"store/apps/dev\"]")
 				.first()
 				.attr("href")
 				.split("id=")[1] || "",
 		icon:
 			$app
-				.find('img[data-ils="3"]')
+				.find("img[data-ils=\"3\"]")
 				.first()
 				.attr("src") || "",
 		score,

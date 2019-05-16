@@ -1,4 +1,5 @@
 import parseObfuscatedApplicationList from "~/common/parsing/parse-obfuscated-list";
+import { ListApplication } from "~/typedef/list-application";
 import debug from "~/util/debug";
 import {
 	extractPageToken,
@@ -30,7 +31,7 @@ export default async function publisher(options) {
 		storeId = publisherInfo.name;
 	}
 
-	const applications = [];
+	const applications: ListApplication[] = [];
 	const initial = await initialRequest({ ...options, storeId });
 
 	applications.push(...parseObfuscatedApplicationList(initial));

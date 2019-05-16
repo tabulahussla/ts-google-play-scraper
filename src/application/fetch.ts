@@ -1,4 +1,5 @@
 import qs from "querystring";
+import { ApplicationRequest } from "~/typedef/application";
 import httpRequest from "~/util/http-request";
 
 export const BASE_URL = "https://play.google.com/store/apps/details?";

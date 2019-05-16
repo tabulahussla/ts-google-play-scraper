@@ -1,4 +1,5 @@
 import qs from "querystring";
+import { PublisherRequest } from "~/typedef/publisher";
 import debug from "~/util/debug";
 import httpRequest from "~/util/http-request";
 import rawStringify from "~/util/stringify-raw";
@@ -30,11 +31,6 @@ export function publisherUrl({ storeId, languageCode, countryCode }) {
 	return url;
 }
 
-/**
- * @export
- * @param {import("@xxorg/google-play-scraping").PublisherRequest&{pageToken:string,num:number,start:number}} options
- * @returns {Promise<string>}
- */
 export async function nextPageRequest({
 	storeId,
 	languageCode,
@@ -43,7 +39,7 @@ export async function nextPageRequest({
 	num = 120,
 	start = 0,
 	pageToken,
-}) {
+}: PublisherRequest & { pageToken: string; num: number; start: number }) {
 	debug("PUBLISHER NEXT PAGE REQUEST %o", arguments[0]);
 
 	const response = await httpRequest({
@@ -72,7 +68,12 @@ export async function nextPageRequest({
  * @param {import("@xxorg/google-play-scraping").PublisherRequest} options
  * @returns {Promise<string>}
  */
-export async function initialRequest({ storeId, languageCode, countryCode, options }) {
+export async function initialRequest({
+	storeId,
+	languageCode,
+	countryCode,
+	options,
+}) {
 	debug("PUBLISHER INITIAL REQUEST %o", arguments[0]);
 
 	const response = await httpRequest({

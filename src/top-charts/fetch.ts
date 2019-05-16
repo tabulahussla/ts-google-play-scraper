@@ -1,4 +1,5 @@
 import qs from "querystring";
+import { TopChartsInternalRequest } from "~/typedef/top-charts";
 import httpRequest from "~/util/http-request";
 
 export const BASE_URL = "https://play.google.com/store/apps";
@@ -45,11 +46,6 @@ export function categoryAge(category) {
 	}
 }
 
-/**
- * @export
- * @param {import("@xxorg/google-play-scraping").TopChartsInternalRequest} options
- * @returns {Promise<string>}
- */
 export default async function fetchTopCharts({
 	category,
 	collection,
@@ -58,7 +54,7 @@ export default async function fetchTopCharts({
 	options = {},
 	start = 0,
 	num,
-}) {
+} : TopChartsInternalRequest) {
 	const requestUrl = topChartsUrl({
 		category,
 		collection,
