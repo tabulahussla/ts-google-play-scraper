@@ -74,6 +74,7 @@
 		"babel-plugin-add-module-exports": "^1.0.0",
 		"babel-plugin-istanbul": "^5.1.1",
 		"babel-plugin-module-resolver": "^3.2.0",
+		"git-askpass-env": "^0.0.3",
 		"husky": "^2.1.0",
 		"mocha": "^5.2.0",
 		"nodemon": "^1.18.3",
