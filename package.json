@@ -1,6 +1,6 @@
 {
 	"name": "@xxorg/google-play-scraping",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Google Play scraping",
 	"main": "./dist/",
 	"types": "./dist/index.d.ts",
