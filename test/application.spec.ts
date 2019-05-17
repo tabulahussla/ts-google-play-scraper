@@ -36,13 +36,14 @@ describe("Application", () => {
 		}
 	});
 
-	it("should fail with invalid params", async () => {
+	it("should fail with invalid params", async function() {
+		this.timeout(10000);
 		await assert.rejects(() =>
 			application({
 				storeId: "invalid-bundle",
 				languageCode: "en-US",
 				countryCode: "US",
-			}),
+			})
 		);
 	});
 });
@@ -78,14 +79,19 @@ export function assertValidApplication(app) {
 	assert.ok(typeof app.primaryCategory === "string");
 	assert.ok(typeof app.primaryCategoryId === "string");
 	assert.ok(!app.familyCategory || typeof app.familyCategory === "string");
-	assert.ok(!app.familyCategoryId || typeof app.familyCategoryId === "string");
+	assert.ok(
+		!app.familyCategoryId || typeof app.familyCategoryId === "string"
+	);
 	assert.ok(typeof app.icon === "string");
 	assert.ok(typeof app.headerImage === "string");
 	assert.ok(Array.isArray(app.screenshots));
 	assert.ok(!app.video || typeof app.video === "string");
 	assert.ok(!app.videoImage || typeof app.videoImage === "string");
 	assert.ok(typeof app.contentRating === "string");
-	assert.ok(!app.contentRatingDescription || typeof app.contentRatingDescription === "string");
+	assert.ok(
+		!app.contentRatingDescription ||
+			typeof app.contentRatingDescription === "string"
+	);
 	assert.ok(typeof app.adSupported === "boolean");
 	assert.ok(app.released instanceof Date, "invalid release date");
 	assert.ok(app.updated instanceof Date);

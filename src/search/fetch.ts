@@ -1,4 +1,5 @@
-import { AxiosResponse } from "axios";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
+import { writeFile } from "fs-extra";
 import qs from "querystring";
 import R from "ramda";
 import { SearchRequest } from "~/typedef/search";
@@ -8,8 +9,8 @@ import { parse } from "~/util/script-data";
 
 export const BASE_URL = "https://play.google.com/store/search";
 export const NEXT_URL =
-	"https://play.google.com/_/PlayStoreUi/data/batchexecute?rpcids=qnKhOb&bl=boq_playu" +
-	"iserver_20190424.04_p0&hl=en&gl=us&authuser=0&soc-app=121&soc-platform=1&soc-device=1";
+	"https://play.google.com/_/PlayStoreUi/data/batchexecute?rpcids=qnKhOb&f.sid=%fSid%&bl=boq_playu" +
+	"iserver_20190424.04_p0&hl=%hl%&gl=%gl%&authuser=0&soc-app=121&soc-platform=1&soc-device=1&_reqid=%reqId%&rt=c";
 export const CLUSTER_PAGE_URL =
 	"https://play.google.com/store/apps/collection/search_results_cluster_apps";
 export const CLUSTER_REGEXP = /href="\/store\/apps\/collection\/search_collection_more_results_cluster?(.*?)"/;
@@ -18,6 +19,7 @@ export const BODY =
 	"Cnull%2C%5B96%2C27%2C4%2C8%2C57%2C30%2C110%2C79%2C11%2C16%2C49%2C1%2C3%2C9%2C12%2C" +
 	"104%2C55%2C56%2C51%2C10%2C34%2C77%5D%5D%2Cnull%2C%5C%22%token%%5C%22%5D%5D%22%2Cnu" +
 	"ll%2C%22generic%22%5D%5D%5D";
+export const SESSION_ID_REGEXP = /id="_gd".*?:"(-?\d+?)","/;
 
 export async function skipClusterPage(response: AxiosResponse, options: any) {
 	const [match = void 0] = response.data.match(CLUSTER_REGEXP) || [];
@@ -32,20 +34,45 @@ export async function skipClusterPage(response: AxiosResponse, options: any) {
 	return response.data;
 }
 
-export function extractToken(root: any, data: any) {
-	return R.path(root, data);
+export function extractToken(root: any, data: any): string {
+	return R.path(root, data) as string;
+}
+
+export function extractSessionId(html: string): string {
+	const [sessionId = ""] = html.match(SESSION_ID_REGEXP) || [];
+
+	return sessionId;
 }
 
 export async function nextPageRequest({
 	token,
+	sessionId,
+	requestId,
+	requestNumber,
+	languageCode = "en",
+	countryCode = "us",
 	options = {},
 }: {
+	requestNumber: number;
 	token: string;
-	options: any;
+	sessionId: string;
+	requestId: string;
+	languageCode?: string;
+	countryCode?: string;
+	options?: AxiosRequestConfig;
 }) {
-	debug("nextPageRequest");
+	debug(
+		"nextPageRequest %s",
+		(requestNumber > 0 ? requestNumber : "") + requestId
+	);
 	const response = await httpRequest({
-		url: NEXT_URL,
+		url: NEXT_URL.replace("%fSid%", sessionId)
+			.replace(
+				"%reqId%",
+				(requestNumber > 0 ? requestNumber : "") + requestId
+			)
+			.replace("%hl%", languageCode)
+			.replace("%gl%", countryCode),
 		method: "POST",
 		data: BODY.replace("%token%", token),
 		...(options || {}),
@@ -55,7 +82,8 @@ export async function nextPageRequest({
 		},
 	});
 	const html = response.data;
-	const input = JSON.parse(html.substring(5));
+	const offset = +html.substring(5, 11).trim();
+	const input = JSON.parse(html.substr(12, offset - 1));
 	const data = JSON.parse(input[0][2]);
 
 	return data;
@@ -86,5 +114,5 @@ export default async function initialRequest({
 	debug("skip cluster page");
 	const html = await skipClusterPage(response, options);
 
-	return parse(html);
+	return [parse(html), html];
 }

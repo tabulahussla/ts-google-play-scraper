@@ -18,7 +18,7 @@
 	"scripts": {
 		"dev": "nodemon src/index.ts",
 		"lint": "tslint --project $(pwd)",
-		"test": "BABEL_DISABLE_CACHE=1 NODE_ENV=test BABEL_ENV=development mocha",
+		"test": "NODE_ENV=test mocha",
 		"cov": "NODE_ENV=test nyc mocha",
 		"type-check": "tsc --noEmit",
 		"type-check:watch": "yarn type-check --watch",
