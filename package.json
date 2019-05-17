@@ -22,9 +22,10 @@
 		"cov": "NODE_ENV=test nyc mocha",
 		"type-check": "tsc --noEmit",
 		"type-check:watch": "yarn type-check --watch",
-		"build": "yarn build:types && yarn build:js",
+		"build": "yarn build:types && yarn build:js && yarn build:copy",
 		"build:types": "node dts-gen",
 		"build:js": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline",
+		"build:copy": "cp -r src/fixtures dist/fixtures",
 		"prepublishOnly": "yarn build"
 	},
 	"dependencies": {
