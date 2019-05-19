@@ -105,7 +105,7 @@ export const MAPPINGS: any = {
  * field's value. If it's an object, extract the value in object.path and pass
  * it to the function in object.fun
  */
-export function extractMappedApplication(scriptData: any, request: any) {
+export function extractMappedApplication(scriptData: any, request: any): any {
 	return R.map(extractor(scriptData, request), MAPPINGS);
 }
 

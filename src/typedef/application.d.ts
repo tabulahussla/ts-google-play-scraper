@@ -43,10 +43,12 @@ export interface Application {
 	developerWebsite: string;
 	developerAddress: string;
 	privacyPolicy: string;
+	categories: string[];
 	primaryCategory: string;
 	primaryCategoryId: string;
 	familyCategory: string;
 	familyCategoryId: string;
+	ageTargeting: string;
 
 	icon: string;
 	headerImage: string;
